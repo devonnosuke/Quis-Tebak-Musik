@@ -1,0 +1,230 @@
+/* Styling untuk scrollbar di browser berbasis Webkit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+	width: 16px; /* Lebar scrollbar */
+	height: 16px; /* Tinggi scrollbar horizontal */
+}
+
+::-webkit-scrollbar-track {
+	background-color: #4b0082; /* Warna jalur scrollbar (ungu tua) */
+	border-radius: 8px; /* Membuat sudut jalur melengkung */
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #00ffff; /* Warna penggeser scrollbar (biru cyan) */
+	border-radius: 8px; /* Membuat sudut penggeser melengkung */
+	border: 4px solid #4b0082; /* Memberikan sedikit ruang di sekitar penggeser */
+}
+
+/* Styling tambahan untuk browser yang mendukung scrollbar pada pseudo-element */
+::-webkit-scrollbar-thumb:hover {
+	background-color: #0099cc; /* Warna penggeser saat hover */
+}
+
+/* Styling untuk Firefox */
+* {
+	scrollbar-width: auto; /* Mengembalikan ukuran scrollbar ke default yang lebih besar */
+	scrollbar-color: #00ffff #4b0082; /* Warna penggeser dan jalur */
+}
+
+
+@font-face {
+	font-family: 'Poppins';
+	src: url('../fonts/Poppins-Regular.woff2') format('woff2');
+	font-weight: 400; /* Regular */
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Poppins';
+	src: url('../fonts/Poppins-Bold.woff2') format('woff2');
+	font-weight: 700; /* Bold */
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Poppins';
+	src: url('../fonts/Poppins-Italic.woff2') format('woff2');
+	font-weight: 400; /* Regular Italic */
+	font-style: italic;
+}
+
+
+body {
+	margin: 0;
+	font-family: 'Poppins', sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	overflow: hidden;
+}
+
+h1 {
+	font-size: 3rem;
+	font-weight: bold;
+}
+
+#app {
+	text-align: center;
+	width: 100%;
+}
+
+.btn {
+	transition: transform 0.2s;
+}
+
+.btn:hover {
+	transform: scale(1.1);
+}
+
+.card {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 3rem;
+	margin: 45px;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: transform 0.3s;
+	padding: 10px;
+}
+.card .card-text {
+	font-size: 1.5rem;
+}
+
+.card .answer{
+	font-size: 0.8rem;
+}
+.card .card-title {
+	font-size: 5rem;
+}
+.card:hover {
+	transform: scale(1.1);
+}
+
+#volume-control {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	background: rgba(0, 0, 0, 0.2);
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+#copyright {
+	position: fixed;
+	bottom: -20px;
+	left: 1px;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: none;
+	color: rgba(255, 255, 255, 0.6);
+	font-size: 0.7rem;
+	letter-spacing: 1px;
+}
+
+.flex {
+	display: flex;
+	flex-direction:column;
+	align-items: center;
+}
+
+.img-responsive {
+	width: 50vw;
+}
+
+/* Questions mark beat */
+.heart {
+	font-size: 18em;
+	line-height:120%;
+	position: relative;
+  }
+	
+  .qaw {
+	position: relative;
+	z-index: -5;
+	/* z-index: 1; */
+	animation: beat 2s linear infinite;
+  }
+  
+  .qaw-2 {
+	z-index: -5;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	animation: echo 2s linear infinite;
+  }
+	
+  @keyframes beat {
+	0% {
+	  transform: scale(1);
+	}
+	14% {
+	  transform: scale(0.9);
+	}
+	21% {
+	  transform: scale(1.1) skew(0.004turn)
+	}
+	28% {
+	  transform: scale(1) skew(0.008turn);
+	}
+	35% {
+	  transform: scale(1) skew(0)
+	}
+  }
+	
+  @keyframes echo {
+	0% {
+	  opacity: 0.5;
+	  transform: scale(1);
+	}
+	14% {
+	  opacity: 0.4;
+	  transform: scale(0.8);
+	}
+	21% {
+	  opacity: 0.4;
+	  transform: scale(1.1);
+	}
+	100% {
+	  opacity: 0;
+	  transform: scale(3);
+	}
+  }
+
+.card-body h4.icon-menu {
+	padding: 1rem 2rem;
+	font-size: 8rem;
+  }
+
+.countdown-style {
+	font-size: 18em;
+    line-height: 120%;
+    position: relative;
+}
+
+.video-container {
+	width: 80%; /* Sesuaikan dengan kebutuhan */
+	max-width: 870px;
+	aspect-ratio: 16 / 9; /* Atur rasio video */
+	margin: 0 auto;
+	border: 2px solid #ccc;
+	overflow: hidden;
+	position: relative;
+}
+
+/* Video responsif */
+.video-container video {
+	width: 100%;
+	height: 100%;
+	object-fit: cover; /* Sesuaikan dengan konten video */
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.hidden {
+	display: none;
+}
