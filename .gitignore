@@ -1,3 +1,4 @@
-answers/*
+app/answers/*
+dist/
 # !.gitkeep
 !answers/how-to-add-music.txt
