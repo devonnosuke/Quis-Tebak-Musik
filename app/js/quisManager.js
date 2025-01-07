@@ -193,6 +193,9 @@ function startCountdown(content, index, is_answer = false, is_example = false) {
 				</div>
 				
 				`;
+        setAllVolumeToMasterVolume();
+        
+
         show_cut_scene(index, is_example);
         // video_element.innerHTML = ``;
       } else {
