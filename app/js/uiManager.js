@@ -16,7 +16,7 @@ function showWelcomeScreen() {
 		<section class="flex">
 			<h1>Kuis Tebak Musik</h1>
 			<img src="assets/images/Anime-logo.png" class="img-responsive">
-			<button class="btn btn-primary" onclick="showMainMenu();playBacksound();playClickSound('accept');">Mulai</button>
+			<button class="btn btn-primary" id="start" onclick="showMainMenu();playBacksound();playClickSound('accept');">Mulai</button>
 		</section>
 	`;
 }

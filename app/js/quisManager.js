@@ -4,7 +4,7 @@ import {
   getTitleAnime,
   show_cut_scene,
 } from "./utils.js";
-import { stopBacksound, toggleMusic } from "./audioManager.js";
+import { stopBacksound, toggleMusic, setAllVolumeToMasterVolume } from "./audioManager.js";
 
 function startQuiz() {
   closeModal();
@@ -164,36 +164,43 @@ function startCountdown(content, index, is_answer = false, is_example = false) {
 
   // Reset the count
   countdownElement.innerHTML = is_answer
-    ? `<div class="countdown-style">${count}</div>`
+    ? ` <div class="countdown-style">${count}</div>`
     : count;
-
+    // countdownElement.innerHTML  = ;
   // Start the countdown
   countdown = setInterval(() => {
     count--;
     if (count > 0) {
       countdownElement.innerHTML = is_answer
-        ? `<div class="countdown-style">${count}</div>`
-        : count;
-    } else {
-      if (is_answer) {
-        countdownElement.innerHTML = `<h1 class="modal-title text-wrap" style="font-size: 1.8rem; line-height:1">Jawaban: </br>
-					<span class="text-success" style="font-size: 2rem;text-transform: capitalize">${getTitleAnime(
+        ? `
+        <div class="countdown-style">${count}</div>
+        <div id="answer_content" class="hidden">
+          <h1 class="modal-title text-wrap" style="font-size: 1.8rem; line-height:1">Jawaban: </br>
+          <span class="text-success" style="font-size: 2rem;text-transform: capitalize">${getTitleAnime(
             music.title
           )}</span>
-				</h1>
-				<div id="show-cutscene">
-					<img src="${getMusicDir(
-            music.title,
-            ".png"
-          )}" class="img-fluid" id="answer-img" style="max-height:60vh">
-					<video controls class="hidden" id="video">
-					<source src="${getMusicDir(music.title, ".mp4")}" type="video/mp4">
-					Your browser does not support the video tag.
-					</video>
-				</div>
-				
-				`;
+          </h1>
+          <div id="show-cutscene">
+            <img src="${getMusicDir(
+              music.title,
+              ".png"
+            )}" class="img-fluid" id="answer-img" style="max-height:60vh">
+            <video controls class="hidden" id="video" preload="auto">
+            <source src="${getMusicDir(music.title, ".mp4")}" type="video/mp4">
+            Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        `
+        : count;
         setAllVolumeToMasterVolume();
+    } else {
+      if (is_answer) {
+        setAllVolumeToMasterVolume();
+        let answerContent = document.getElementById('answer_content');
+        let countdownContent = document.querySelector('.countdown-style');
+        answerContent.classList.remove('hidden');
+        countdownContent.classList.add('hidden');
         
 
         show_cut_scene(index, is_example);

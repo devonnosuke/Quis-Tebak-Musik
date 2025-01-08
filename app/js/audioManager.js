@@ -3,42 +3,16 @@ const backgroundAudio = document.getElementById("background-audio");
 const backgroundAudio2 = document.getElementById("background-audio2");
 const volumeRange = document.getElementById("volume-range");
 
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-function normalizeVolume(trackELement ,targetDb = -20 ) {
-
-  const track = audioContext.createMediaElementSource(trackELement);
-
-  // Buat GainNode untuk mengatur volume
-  const gainNode = audioContext.createGain();
-  track.connect(gainNode).connect(audioContext.destination);
-
-  // Deteksi dB dan normalisasi
-  const analyser = audioContext.createAnalyser();
-  track.connect(analyser);
-
-  const dataArray = new Uint8Array(analyser.frequencyBinCount);
-  analyser.getByteTimeDomainData(dataArray);
-
-  // Hitung level rata-rata dB
-  let rms = 0;
-  for (let i = 0; i < dataArray.length; i++) {
-    const sample = dataArray[i] / 128 - 1;
-    rms += sample * sample;
-  }
-  rms = Math.sqrt(rms / dataArray.length);
-  const currentDb = 20 * Math.log10(rms);
-
-  // Hitung gain untuk menyesuaikan ke target dB
-  const adjustment = targetDb - currentDb;
-  gainNode.gain.value = Math.pow(10, adjustment / 20);
-}
-
+window.addEventListener('load', () => {
+  volumeMaster = volumeRange.value / 100;
+  console.log(volumeMaster);
+  setAllVolumeToMasterVolume();
+});
 
 let audio = null;
 let sound = null;
 let volumeMaster = 50/100;
-setAllVolumeToMasterVolume();
+// setAllVolumeToMasterVolume();
 
 volumeRange.addEventListener("input", () => {
   volumeMaster = volumeRange.value / 100;
@@ -64,13 +38,13 @@ function playClickSound(type) {
   let soundPath;
   switch (type) {
     case "accept":
-      soundPath = "../assets/audio/accept-click.wav";
+      soundPath = "../app/assets/audio/accept-click.mp3";
       break;
     case "back":
-      soundPath = "../assets/audio/back-click.wav";
+      soundPath = "../app/assets/audio/back-click.mp3";
       break;
     case "login":
-      soundPath = "../assets/audio/login.mp3";
+      soundPath = "../app/assets/audio/login.mp3";
       break;
     default:
       console.error("Invalid sound type:", type);
@@ -103,23 +77,24 @@ function toggleMusic(src, reff = "00:00") {
 
 function setAllVolumeToMasterVolume() {
   console.log('volume Master is ',volumeMaster);
-  normalizeVolume(backgroundAudio);
-  normalizeVolume(backgroundAudio2);
+  // normalizeVolume(backgroundAudio);
+  // normalizeVolume(backgroundAudio2);
   backgroundAudio.volume = volumeMaster;
   backgroundAudio2.volume = volumeMaster;
   
 
-  if (audio != null || sound != null) {
+  if (audio) {
     audio.volume = volumeMaster;
     console.log('MUSIC SET volume Master is ',volumeMaster);
   }
-  let video = document.getElementById('video');
 
+  const video = document.getElementById('video');
   if (video) {
-    video.addEventListener('loadedmetadata', () => {
+    video.addEventListener('canplay', () => {
       video.volume = volumeMaster;
       console.log(video.volume);
     });
+    video.volume = volumeMaster;
   }
 }
 

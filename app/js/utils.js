@@ -1,15 +1,6 @@
-// function setCookie(name, value) {
-//   const date = new Date();
-//   date.setTime(date.getTime() + 1 * 24 * 60 * 60 * 1000);
-//   document.cookie = `${name}=${encodeURIComponent(
-//     JSON.stringify(value)
-//   )};path=/`;
-// }
 
 function setLocalData(key, value) {
-  // if (localStorage.getItem(key) !== null) {
-  //   localStorage.clear(key);
-  // }
+
   localStorage.setItem(key, encodeURIComponent(JSON.stringify(value)));
 }
 
@@ -18,14 +9,7 @@ function getLocalData(key) {
   return data ? JSON.parse(decodeURIComponent(data)) : null;
 }
 
-// function getCookie(name) {
-//   const cookies = document.cookie.split("; ");
-//   for (const cookie of cookies) {
-//     const [key, value] = cookie.split("=");
-//     if (key === name) return JSON.parse(decodeURIComponent(value));
-//   }
-//   return null;
-// }
+
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -37,6 +21,9 @@ function shuffleArray(array) {
 // for name/info song
 
 function getMusicDir(title, type = "") {
+  // if(type =='.mp4') {
+  //   return `answers/${title}/gain_${title}${type}`;
+  // }
   return `answers/${title}/${title}${type}`;
 }
 function getTitleAnime(title, is_card = false) {

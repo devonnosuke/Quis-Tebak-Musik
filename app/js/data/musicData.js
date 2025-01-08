@@ -134,7 +134,7 @@ const musicData = [
   },
   {
     id: 23,
-    title: "023_Digimon OP_Butterfly - Kōji Wada",
+    title: "023_Digimon OP_Butterfly - Koji Wada",
     reff: "00:50",
     checked: false,
   },
@@ -272,7 +272,7 @@ const musicData = [
   },
   {
     id: 46,
-    title: "046_Steins;Gate OP_Hacking to the Gate - Itō Kanako",
+    title: "046_Steins;Gate OP_Hacking to the Gate - Ito Kanako",
     reff: "01:00",
     checked: false,
   },

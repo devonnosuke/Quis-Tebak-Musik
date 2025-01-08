@@ -110,6 +110,7 @@ h1 {
 	padding: 10px;
 	border-radius: 5px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	z-index: 9999999999999999;
 }
 #copyright {
 	position: fixed;
@@ -227,4 +228,8 @@ h1 {
 
 .hidden {
 	display: none;
+}
+
+.visible {
+	display: block;
 }

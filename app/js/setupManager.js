@@ -36,6 +36,7 @@ function showInputPage() {
             min="1"
             max="${musicData.length}"
             placeholder="Jumlah lagu"
+            autofocus
           />
           <br>
           <button onclick="showMainMenu(); playClickSound('back');" class="btn btn-primary btn-lg">kembali</button>
@@ -65,7 +66,8 @@ function proceedToShuffle() {
     }
     setLocalData("songListRandom", selectedSongs);
     console.log("cookie songListItem disetel", selectedSongs);
-    showResultPage();
+    // showResultPage();
+    showOptionShuffle();
   }, 1000);
   448;
 }
