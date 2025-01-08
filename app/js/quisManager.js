@@ -6,7 +6,8 @@ import {
 } from "./utils.js";
 import { stopBacksound, toggleMusic, setAllVolumeToMasterVolume } from "./audioManager.js";
 
-function startQuiz() {
+function startQuiz(ids = null) {
+  console.log(ids);
   closeModal();
   const selectedSongs = getLocalData("songListRandom");
   console.log(selectedSongs);
@@ -23,10 +24,10 @@ function startQuiz() {
         .map(
           (music, index) => `
 				<div class="card border-secondary mb-3 ${
-          music.checked ? "bg-info" : ""
+          music.checked ? "bg-info" : "bg-dark"
         }" style="max-width: 20rem;" onclick="playClickSound('accept'); playMusic(${
             music.id
-          },${false}); playBacksound2()">
+          },${false},${index}); playBacksound2()" id="${index+1}">
 					<div class="card-body">
 					${
             music.checked
@@ -46,7 +47,7 @@ function startQuiz() {
 							<h4 class="card-title text-light">
 								<img src="assets/images/notes.png" class="img-fluid" id="answer-img" style="width: 200px">
 							</h4>
-							<p class="card-text text-success text-wrap" style="font-size: 1.1rem">#${
+							<p class="card-text text-success text-wrap" style="font-size: 2.2rem">#${
                 index + 1
               }</p>
 							`
@@ -59,11 +60,33 @@ function startQuiz() {
         .join("")}
 		</div>
 		<button class="btn btn-secondary btn-lg mt-3" onclick="playClickSound('back'); showMainMenu();">Kembali</button>
-	`;
+    `;
+    scrollToElement(ids)
   }
 }
 
-function playMusic(index, is_example = false) {
+function scrollToElement(id) {
+	// Tambahkan hash ke URL
+
+  if (id == null) {
+    return
+  }
+
+	window.location.hash = id + 1;
+  console.log(id);
+
+	// Cari elemen dengan ID yang diberikan
+	const targetElement = document.getElementById(id);
+
+	if (targetElement) {
+		// Gulir halaman ke elemen target
+		targetElement.scrollIntoView({ behavior: "smooth" });
+	} else {
+		console.error(`Element with ID "${id}" not found.`);
+	}
+}
+
+function playMusic(index, is_example = false, id) {
   console.log("is_example: ", is_example);
   // const music = musicData[index];
   // backgroundAudio.pause();
@@ -95,13 +118,11 @@ function playMusic(index, is_example = false) {
         : `<button class="btn btn-secondary btn-lg mt-4" onclick="stopMusic(); playClickSound('back'); startQuiz();playBacksound()">Kembali</button>`
     }
 
-		<div class="modal fade modal-xl" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade modal-xl" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 			<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="pauseAnswer();startQuiz(); playBacksound();">
-						<span aria-hidden="true"></span>
-					</button>
+					
 				</div>
 				<div class="modal-body text-center" id="countdown2">
 					
@@ -111,9 +132,8 @@ function playMusic(index, is_example = false) {
 						${
               is_example
                 ? `<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="checkContoh(); startExample(); playBacksound();">Kembali ke Contoh</button>`
-                : `<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="check_is_done(${index},${is_example}); startQuiz(); playBacksound();">Tandai Telah Terjawab dan Lanjut Berikutnya</button>`
+                : `<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="check_is_done(${index},${is_example}); startQuiz(${id}); playBacksound();">Tandai Telah Terjawab dan Lanjut Berikutnya</button>`
             }
-						
 					</div>
 				</div>
 			</div>

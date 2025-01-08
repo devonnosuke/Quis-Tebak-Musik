@@ -25,19 +25,19 @@ function showMainMenu() {
   app.innerHTML = `
 		<h1>Kuis Tebak Musik</h1>
 		<div>
-			<div class="card border-secondary mb-3" style="width: 18rem; padding: 4rem 0" onclick="playClickSound('accept'); startQuiz()">
+			<div class="card border-secondary mb-3  bg-dark " style="width: 18rem; padding: 4rem 0" onclick="playClickSound('accept'); startQuiz()">
 				<div class="card-body">
 					<h4 class="card-title text-body icon-menu"><i class="bi bi-dice-5"></i></h4>
 					<p class="card-text">Mulai Kuis</p>
 				</div>
 			</div>
-			<div class="card border-secondary mb-3" style="width: 18rem; padding: 4rem 0" onclick="playClickSound('accept'); showHowToPlay()">
+			<div class="card border-secondary mb-3  bg-dark " style="width: 18rem; padding: 4rem 0" onclick="playClickSound('accept'); showHowToPlay()">
 				<div class="card-body">
 					<h4 class="card-title text-body icon-menu"><i class="bi bi-card-list"></i></h4>
 					<p class="card-text">Cara Bermain</p>
 				</div>
 			</div>
-			<div class="card border-secondary mb-3" style="width: 18rem; padding: 4rem 0" onclick="playClickSound('accept'); showAbout()">
+			<div class="card border-secondary mb-3  bg-dark " style="width: 18rem; padding: 4rem 0" onclick="playClickSound('accept'); showAbout()">
 				<div class="card-body">
 					<h4 class="card-title text-body icon-menu"><i class="bi bi-info-circle"></i></h4>
 					<p class="card-text">Tentang</p>

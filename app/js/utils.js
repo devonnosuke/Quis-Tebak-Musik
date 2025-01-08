@@ -4,12 +4,21 @@ function setLocalData(key, value) {
   localStorage.setItem(key, encodeURIComponent(JSON.stringify(value)));
 }
 
-function getLocalData(key) {
-  const data = localStorage.getItem(key);
-  return data ? JSON.parse(decodeURIComponent(data)) : null;
+function getLocalData(key, without_checked_music = false) {
+	const data = localStorage.getItem(key);
+	if (!data) return null;
+
+	const parsedData = JSON.parse(decodeURIComponent(data));
+
+	if (without_checked_music) {
+		// Filter musicData ORI berdasarkan checked di parsedData
+		return musicData.filter(
+			(oriItem) => !parsedData.some((selectedItem) => selectedItem.id === oriItem.id && selectedItem.checked)
+		);
+	}
+
+	return parsedData;
 }
-
-
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {

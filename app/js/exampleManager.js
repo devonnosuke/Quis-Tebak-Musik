@@ -29,7 +29,7 @@ function startExample() {
                               <h4 class="card-title text-light">
                                   <img src="assets/images/notes.png" class="img-fluid" id="answer-img" style="width: 200px">
                               </h4>
-                              <p class="card-text text-success text-wrap" style="font-size: 1.1rem">#${
+                              <p class="card-text text-success text-wrap" style="font-size: 2.2rem">#${
                                 index + 1
                               }</p>
                               `

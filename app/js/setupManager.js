@@ -1,5 +1,5 @@
 import { musicData } from "./data/musicData.js";
-import { geInfoSong, getLocalData, setLocalData } from "./utils.js";
+import { geInfoSong, getLocalData, setLocalData, shuffleArray } from "./utils.js";
 window.musicData = musicData;
 
 function showOptionShuffle() {
@@ -10,54 +10,82 @@ function showOptionShuffle() {
               <h1>Kamu sudah membuat List Lagu!</h1>
               
               <button onclick="showWelcomeScreen(); playClickSound('back');" class="btn btn-primary btn-lg">kembali</button>
+              <button onclick="confirmProceed(false); playClickSound('back');" class="btn btn-primary btn-lg">Acak Kambali lagu</button>
               <button onclick="showResultPage(); playClickSound('accept');" class="btn btn-primary btn-lg">Lihat List lagu</button>
-              <button onclick="confirmProceed(); playClickSound('back');" class="btn btn-primary btn-lg">Acak Kambali lagu</button>
+              <button onclick="confirmProceed(true); playClickSound('back');" class="btn btn-primary btn-lg">reset lagu yang telah terjawab</button>
           `;
   } else {
     showInputPage();
   }
 }
 
-function confirmProceed() {
-  if (confirm("Yakin ingin membuat list baru, list sebelumnya akan dihapus?")) {
-    showInputPage();
+function confirmProceed(is_new) {
+  if (is_new) {
+    if (confirm("Yakin ingin membuat list baru ?, list sebelumnya akan dihapus dan semua yang telah terjawab akan direset.")) {
+      showInputPage(true);
+    }  
+  } else {
+    if (confirm("Yakin ingin membuat list baru ?, list sebelumnya akan dihapus, tetapi yang sudah terjawab tidak akan digunakan lagi.")) {
+      showInputPage(false);
+    }
   }
 }
 
 // Page 1: Input number of songs
-function showInputPage() {
-  console.log("music data:", musicData);
+function showInputPage(is_new = true) {
+  let musicDatas = musicData;
+
+  if (!is_new) {
+    musicDatas = getLocalData('songListRandom', true);
+  }
+
+  console.log(musicDatas);
+  // return;
+
   const app = document.getElementById("app");
   app.innerHTML = `
           <h1>Masukkan jumlah lagu</h1>
+          <h3>Total lagu yang belum terjawab: ${musicDatas.length}</h3>
           <input style="padding: 10px;font-size: 2rem;width: 300px; text-align: center; margin: 20px"
             type="number"
             id="songCount"
             min="1"
-            max="${musicData.length}"
+            max="${musicDatas.length}"
             placeholder="Jumlah lagu"
             autofocus
           />
           <br>
           <button onclick="showMainMenu(); playClickSound('back');" class="btn btn-primary btn-lg">kembali</button>
-          <button onclick="proceedToShuffle(); playClickSound('back');" class="btn btn-primary btn-lg">Lanjut</button>
+          ${(is_new)?
+          `<button onclick="proceedToShuffle(true); playClickSound('back');" class="btn btn-primary btn-lg">Lanjut</button>`:
+          `<button onclick="proceedToShuffle(); playClickSound('back');" class="btn btn-primary btn-lg">Lanjut</button>`}
+          
           <div id="list"></div>
       `;
 }
 // Page 2: Loading and shuffle logic
-function proceedToShuffle() {
+function proceedToShuffle(is_new = false) {
+  let musicDatas = musicData;
+  
+  if (!is_new) {
+    musicDatas = getLocalData('songListRandom', true);
+  }
+  
+  console.log(musicDatas);
   const songCount = parseInt(document.getElementById("songCount").value);
-  if (!songCount || songCount < 1 || songCount > musicData.length) {
-    alert(`Masukkan angka antara 1 dan ${musicData.length}`);
+  if (!songCount || songCount < 1 || songCount > musicDatas.length) {
+    alert(`Masukkan angka antara 1 dan ${musicDatas.length}`);
     return;
   }
-
+  // return;
+  
   const app = document.getElementById("app");
   app.innerHTML = "<h1>Loading...</h1>";
 
   setTimeout(() => {
-    shuffleArray(musicData);
-    const selectedSongs = musicData.slice(0, songCount);
+    shuffleArray(musicDatas);
+    const selectedSongs = musicDatas.slice(0, songCount);
+    shuffleArray(selectedSongs);
 
     if (!selectedSongs.length) {
       alert("gagal membuat daftar lagu");
@@ -65,7 +93,7 @@ function proceedToShuffle() {
       return;
     }
     setLocalData("songListRandom", selectedSongs);
-    console.log("cookie songListItem disetel", selectedSongs);
+    console.log("LocalData songListItem disetel", selectedSongs);
     // showResultPage();
     showOptionShuffle();
   }, 1000);
