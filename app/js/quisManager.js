@@ -108,12 +108,10 @@ function playMusic(index, is_example = false) {
 				</div>
 				<div class="modal-footer text-center">
 					<div class="form-check" style="margin: 0 auto;">
-						<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onchange="check_is_done(${index},${is_example})">
-						<label class="form-check-label me-3" for="flexCheckDefault">Tandai telah terjawab</label>
 						${
               is_example
-                ? '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="checkContoh(); startExample(); playBacksound();">Kembali ke Contoh</button>'
-                : '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="startQuiz(); playBacksound();">Lanjut Berikutnya</button>'
+                ? `<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="checkContoh(); startExample(); playBacksound();">Kembali ke Contoh</button>`
+                : `<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="check_is_done(${index},${is_example}); startQuiz(); playBacksound();">Tandai Telah Terjawab dan Lanjut Berikutnya</button>`
             }
 						
 					</div>
