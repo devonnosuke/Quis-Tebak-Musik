@@ -510,7 +510,7 @@ const musicData = [
   },
   {
     id: 85,
-    title: "085_OST CAPTAIN TSUBASA - DRAGON SCREAMER - Ade Basuki [Indo ver.]",
+    title: "085_OST CAPTAIN TSUBASA_DRAGON SCREAMER - Ade Basuki [Indo ver.]",
     reff: "00:38",
     checked: false,
   },
@@ -765,14 +765,14 @@ const musicData = [
   },
   {
     id: 127,
-    title: "127_Kimetsu no Yaiba MUGEN - MY FIRST STORY and HYDE",
+    title: "127_Kimetsu no Yaiba_MUGEN - MY FIRST STORY and HYDE",
     reff: "00:47",
     checked: false,
   },
   {
     id: 128,
     title:
-      "128_Highschool of the Dead - HotD- Kisida Kyodan & THE Akebosi Rockets",
+      "128_Highschool of the Dead_HotD - Kisida Kyodan & THE Akebosi Rockets",
     reff: "00:45",
     checked: false,
   },

@@ -5,7 +5,7 @@ const volumeRange = document.getElementById("volume-range");
 
 window.addEventListener('load', () => {
   volumeMaster = volumeRange.value / 100;
-  console.log(volumeMaster);
+  // console.log(volumeMaster);
   setAllVolumeToMasterVolume();
 });
 
@@ -76,7 +76,7 @@ function toggleMusic(src, reff = "00:00") {
 }
 
 function setAllVolumeToMasterVolume() {
-  console.log('volume Master is ',volumeMaster);
+  // console.log('volume Master is ',volumeMaster);
   // normalizeVolume(backgroundAudio);
   // normalizeVolume(backgroundAudio2);
   backgroundAudio.volume = volumeMaster;
@@ -92,7 +92,7 @@ function setAllVolumeToMasterVolume() {
   if (video) {
     video.addEventListener('canplay', () => {
       video.volume = volumeMaster;
-      console.log(video.volume);
+      // console.log(video.volume);
     });
     video.volume = volumeMaster;
   }

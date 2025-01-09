@@ -4,13 +4,17 @@ import {
   getTitleAnime,
   show_cut_scene,
 } from "./utils.js";
-import { stopBacksound, toggleMusic, setAllVolumeToMasterVolume } from "./audioManager.js";
+import {
+  stopBacksound,
+  toggleMusic,
+  setAllVolumeToMasterVolume,
+} from "./audioManager.js";
 
 function startQuiz(ids = null) {
-  console.log(ids);
+  // console.log(ids);
   closeModal();
   const selectedSongs = getLocalData("songListRandom");
-  console.log(selectedSongs);
+  // console.log(selectedSongs);
   if (!selectedSongs) {
     app.innerHTML = `
 			<h1>Kamu belum melakukan Setup Lagu!</h1>
@@ -27,7 +31,7 @@ function startQuiz(ids = null) {
           music.checked ? "bg-info" : "bg-dark"
         }" style="max-width: 20rem;" onclick="playClickSound('accept'); playMusic(${
             music.id
-          },${false},${index}); playBacksound2()" id="${index+1}">
+          },${false},${index}); playBacksound2()" id="${index + 1}">
 					<div class="card-body">
 					${
             music.checked
@@ -61,37 +65,38 @@ function startQuiz(ids = null) {
 		</div>
 		<button class="btn btn-secondary btn-lg mt-3" onclick="playClickSound('back'); showMainMenu();">Kembali</button>
     `;
-    scrollToElement(ids)
+    scrollToElement(ids);
   }
 }
 
 function scrollToElement(id) {
-	// Tambahkan hash ke URL
+  // Tambahkan hash ke URL
 
   if (id == null) {
-    return
+    return;
   }
 
-	window.location.hash = id + 1;
+  window.location.hash = id + 1;
   console.log(id);
 
-	// Cari elemen dengan ID yang diberikan
-	const targetElement = document.getElementById(id);
+  // Cari elemen dengan ID yang diberikan
+  const targetElement = document.getElementById(id);
 
-	if (targetElement) {
-		// Gulir halaman ke elemen target
-		targetElement.scrollIntoView({ behavior: "smooth" });
-	} else {
-		console.error(`Element with ID "${id}" not found.`);
-	}
+  if (targetElement) {
+    // Gulir halaman ke elemen target
+    targetElement.scrollIntoView({ behavior: "smooth" });
+  } else {
+    console.error(`Element with ID "${id}" not found.`);
+  }
 }
 
 function playMusic(index, is_example = false, id) {
-  console.log("is_example: ", is_example);
+  // console.log("is_example: ", is_example);
   // const music = musicData[index];
   // backgroundAudio.pause();
 
   app.innerHTML = `
+		<h2 class="text-success">Music #${++id}</h2>
 		<h1>Musik Dari Anime Apakah Ini?</h1>
 		<div class="heart" id="countdown1">
 			<i class="bi bi-question-lg qaw"></i>
@@ -99,15 +104,15 @@ function playMusic(index, is_example = false, id) {
 		</div>
 		<p class="lead mb-4">Siapa cepat dia dapat!</p>
 		<div id="options">
-			<button class="btn btn-primary btn-lg" onclick="stopMusic(); startCountdown('countdown1','${index}',${false},${is_example}); playClickSound('login');">
+			<button id="btn-play" class="btn btn-primary btn-lg" onclick="handlePlay('${index}', ${is_example})">
 				Play 
 				<i class="bi bi-play-circle"></i>	
 			</button>
-			<button class="btn btn-primary btn-lg" onclick="stopMusic(); pause_qestions()">
+			<button id="btn-stop" class="btn btn-primary btn-lg" onclick="handleStop()" disabled>
 				Stop 
 				<i class="bi bi-stop-circle inline-block"></i>
 			</button>
-			<button class="btn btn-primary btn-lg" onclick="stopMusic(); startCountdown('countdown2','${index}',${true},${is_example}); playClickSound('login');" data-bs-toggle="modal" data-bs-target="#exampleModal">
+			<button id="btn-jawaban" class="btn btn-primary btn-lg" onclick="handleJawaban('${index}', ${is_example})" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled>
 				Jawaban 
 				<i class="bi bi-question-circle"></i>
 			</button>
@@ -145,11 +150,16 @@ function playMusic(index, is_example = false, id) {
 function startCountdown(content, index, is_answer = false, is_example = false) {
   // backgroundAudio.pause();
   stopBacksound();
-  console.log("is Answer: ", is_answer);
-  console.log("is Example: ", is_example);
+  // console.log("is Answer: ", is_answer);
+  // console.log("is Example: ", is_example);
 
   // Ask for confirmation before playing
   if (is_answer) {
+    const confirmation = confirm(`Yakin ingin melihat jawaban?`);
+    if (!confirmation) {
+      return; // Exit if user cancels
+    }
+
     // Dynamic import
     import("./bootstrap.bundle.min.js")
       .then(() => {
@@ -161,11 +171,6 @@ function startCountdown(content, index, is_answer = false, is_example = false) {
       .catch((error) => {
         console.error("Failed to load Bootstrap:", error);
       });
-
-    const confirmation = confirm(`Yakin ingin melihat jawaban?`);
-    if (!confirmation) {
-      return; // Exit if user cancels
-    }
   }
   let music;
 
@@ -184,7 +189,7 @@ function startCountdown(content, index, is_answer = false, is_example = false) {
   countdownElement.innerHTML = is_answer
     ? ` <div class="countdown-style">${count}</div>`
     : count;
-    // countdownElement.innerHTML  = ;
+  // countdownElement.innerHTML  = ;
   // Start the countdown
   countdown = setInterval(() => {
     count--;
@@ -211,15 +216,14 @@ function startCountdown(content, index, is_answer = false, is_example = false) {
         </div>
         `
         : count;
-        setAllVolumeToMasterVolume();
+      setAllVolumeToMasterVolume();
     } else {
       if (is_answer) {
         setAllVolumeToMasterVolume();
-        let answerContent = document.getElementById('answer_content');
-        let countdownContent = document.querySelector('.countdown-style');
-        answerContent.classList.remove('hidden');
-        countdownContent.classList.add('hidden');
-        
+        let answerContent = document.getElementById("answer_content");
+        let countdownContent = document.querySelector(".countdown-style");
+        answerContent.classList.remove("hidden");
+        countdownContent.classList.add("hidden");
 
         show_cut_scene(index, is_example);
         // video_element.innerHTML = ``;

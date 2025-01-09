@@ -165,6 +165,53 @@ function checkContoh() {
   musicDataExample[0].checked = true;
 }
 
+// ========= for handle button
+
+function handlePlay(index, is_example) {
+  document.getElementById('btn-play').disabled = true;
+  
+  // Tunggu 3 detik sebelum mengaktifkan tombol stop
+  setTimeout(()=>{
+    document.getElementById('btn-stop').disabled = false;
+  }, 3000);
+  
+  // Tunggu 9 detik sebelum mengaktifkan tombol stop
+  setTimeout(()=>{
+    document.getElementById('btn-jawaban').disabled = false;
+  }, 9000);
+
+  // Panggil fungsi tambahan sesuai kebutuhan
+  stopMusic();
+  startCountdown('countdown1',index,false,is_example);
+  playClickSound('login');
+}
+
+function handleStop() {
+	// Ubah status tombol
+  document.getElementById("btn-play").disabled = false;
+	document.getElementById("btn-stop").disabled = true;
+	document.getElementById("btn-jawaban").disabled = false;
+
+	// Panggil fungsi tambahan sesuai kebutuhan
+	stopMusic();
+	pause_qestions();
+}
+
+function handleJawaban(index, is_example) {
+
+  document.getElementById("btn-play").disabled = false;
+  document.getElementById('btn-stop').disabled = true;
+  document.getElementById('btn-jawaban').disabled = true;
+
+
+	// Tambahkan logika jika diperlukan
+	stopMusic();
+	startCountdown('countdown2', index, true, is_example);
+	playClickSound('login');
+}
+
+
+
 window.setLocalData = setLocalData;
 window.getLocalData = getLocalData;
 window.shuffleArray = shuffleArray;
@@ -178,6 +225,9 @@ window.show_cut_scene = show_cut_scene;
 window.check_is_done = check_is_done;
 window.findMusicByIdInCookie = findMusicByIdInCookie;
 window.checkContoh = checkContoh;
+window.handlePlay = handlePlay;
+window.handleStop = handleStop;
+window.handleJawaban = handleJawaban;
 
 export {
   setLocalData,
@@ -193,4 +243,7 @@ export {
   check_is_done,
   findMusicByIdInCookie,
   checkContoh,
+  handlePlay,
+  handleStop,
+  handleJawaban,
 };
