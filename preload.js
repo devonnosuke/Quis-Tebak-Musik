@@ -5,3 +5,7 @@ contextBridge.exposeInMainWorld("electronCookies", {
     ipcRenderer.send("set-cookie", { name, value, expirationDays }),
   getCookie: (name) => ipcRenderer.invoke("get-cookie", name),
 });
+
+contextBridge.exposeInMainWorld("electronAPI", {
+  closeApp: () => ipcRenderer.send("close-app"),
+});

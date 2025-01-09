@@ -43,9 +43,17 @@ function showMainMenu() {
 					<p class="card-text">Tentang</p>
 				</div>
 			</div>
+			<div>
+				<button class="btn btn-secondary btn-md" style="width: fit-content; margin: 15px" id="close-app-btn">Keluar</button>
+			</div>
 			<div class="btn btn-primary position-fixed fixed-top fixed-right" style="width: fit-content; margin: 15px" onclick="playClickSound('accept'); showOptionShuffle()">Setup<div>
+			
 		</div>
+		<div>
 	`;
+  document.getElementById("close-app-btn").addEventListener("click", () => {
+    window.electronAPI.closeApp();
+  });
 }
 
 function showAbout() {
@@ -61,7 +69,7 @@ function showAbout() {
 
 function showHowToPlay() {
   app.innerHTML = `
-		  <div class="card border-secondary mb-3" style="width: 90%; padding: 1rem 0">
+		  <div class="card border-secondary mb-3 bg-dark" style="width: 90%; padding: 1rem 0">
 			  <div class="card-body">
 				  <h1 class="text-light mb-5">Cara Bermain</h1>
 				  <ol style="font-size: 2.4rem; text-align:left">
