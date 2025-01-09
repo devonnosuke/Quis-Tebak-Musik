@@ -60,14 +60,18 @@ function showInputPage(is_new = true) {
   app.innerHTML = `
           <h1>Masukkan jumlah lagu</h1>
           <h3>Total lagu yang belum terjawab: ${musicDatas.length}</h3>
-          <input style="padding: 10px;font-size: 2rem;width: 300px; text-align: center; margin: 20px"
+          <input style="padding: 10px;font-size: 2rem;width: 300px; text-align: center; margin: 20px; display:none"
             type="number"
             id="songCount"
             min="1"
             max="${musicDatas.length}"
             placeholder="Jumlah lagu"
             autofocus
+            tabindex='0'
           />
+          <br>
+          <button id="refocus" class="btn btn-secondary btn-lg">Input Jumlah Lagu</button>
+          <br>
           <br>
           <button onclick="showMainMenu(); playClickSound('back');" class="btn btn-secondary btn-lg">kembali</button>
           ${
@@ -75,9 +79,15 @@ function showInputPage(is_new = true) {
               ? `<button onclick="proceedToShuffle(true); playClickSound('back');" class="btn btn-primary btn-lg">Lanjut</button>`
               : `<button onclick="proceedToShuffle(); playClickSound('back');" class="btn btn-primary btn-lg">Lanjut</button>`
           }
-          
           <div id="list"></div>
       `;
+  const refocusBtn = document.getElementById("refocus");
+  const inputs = document.getElementById("songCount");
+  refocusBtn.addEventListener("click", () => {
+    window.electronAPI.refocusWindow(); // Kirim event ke proses utama
+    refocusBtn.style.display = "none";
+    inputs.style.display = "inline-block";
+  });
 }
 // Page 2: Loading and shuffle logic
 function proceedToShuffle(is_new = false) {

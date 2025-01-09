@@ -60,9 +60,9 @@ function showAbout() {
   app.innerHTML = `
 		  <h1>Tentang</h1>
 		  <p>Aplikasi ini dibuat untuk hiburan. Tebak musik anime favoritmu!</p>
-		  <p>dibuat dengan 💖 dari @devonyura</p>
 		  <p><img src="assets/images/profile.jpg" style="width: 200px; border-radius: 500px" class="img-responsive"/></p>
-		  
+		  <p>dibuat dengan 💖 dari @devonyura</p>
+		  <h2 class="text-secondary">Kuis Tebak Music Anime Ver.2.0</h2>
 		  <button class="btn btn-secondary btn-lg mt-3" onclick="playClickSound('back'); showMainMenu()">Kembali</button>
 	  `;
 }

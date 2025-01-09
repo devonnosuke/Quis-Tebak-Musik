@@ -8,4 +8,5 @@ contextBridge.exposeInMainWorld("electronCookies", {
 
 contextBridge.exposeInMainWorld("electronAPI", {
   closeApp: () => ipcRenderer.send("close-app"),
+  refocusWindow: () => ipcRenderer.send("refocus-window"),
 });
